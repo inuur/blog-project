@@ -29,6 +29,13 @@ class BlogViewSet(mixins.ListModelMixin,
         )
         return Response(status=status.HTTP_200_OK)
 
+    @action(methods=['post'], detail=True)
+    def unfollow(self, request, pk=None):
+        self.request.user.followed_blogs.remove(
+            Blog.objects.get(pk=pk)
+        )
+        return Response(status=status.HTTP_200_OK)
+
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
