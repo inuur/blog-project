@@ -3,7 +3,7 @@ from django.db import models
 
 
 class User(AbstractUser):
-    liked_posts = models.ManyToManyField(
+    read_posts = models.ManyToManyField(
         'api.Post',
         blank=True
     )

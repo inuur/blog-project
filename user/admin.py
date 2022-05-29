@@ -8,10 +8,10 @@ class CustomUserAdmin(UserAdmin):
     fieldsets = (
         *UserAdmin.fieldsets,
         (
-            'Liked posts',
+            'Read posts',
             {
                 'fields': (
-                    'liked_posts',
+                    'read_posts',
                 )
             }
         )
