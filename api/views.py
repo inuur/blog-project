@@ -6,7 +6,10 @@ from .models import (
     Blog,
     Post
 )
-from .serializer import BlogSerializer, PostSerializer
+from .serializer import (
+    BlogSerializer,
+    PostSerializer,
+)
 
 
 class BlogViewSet(mixins.ListModelMixin,
