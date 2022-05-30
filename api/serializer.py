@@ -8,6 +8,7 @@ from .models import (
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
+        read_only_fields = ('blog',)
         fields = '__all__'
 
 

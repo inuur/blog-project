@@ -44,6 +44,13 @@ class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.validated_data['blog'] = Blog.objects.get(author_id=request.user.id)
+        serializer.create(serializer.validated_data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
     @action(methods=['post'], detail=True)
     def read(self, request, pk=None):
         self.request.user.read_posts.add(
