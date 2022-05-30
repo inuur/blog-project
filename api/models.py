@@ -7,7 +7,7 @@ class Blog(models.Model):
         User,
         on_delete=models.CASCADE,
         primary_key=True,
-        related_name='author'
+        related_name='blog'
     )
     followers = models.ManyToManyField(
         User,
