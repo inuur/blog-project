@@ -59,11 +59,10 @@ class PostViewSet(viewsets.ModelViewSet):
         return Response(status=status.HTTP_200_OK)
 
 
-class FeedView(views.APIView):
-    def get(self, request):
-        queryset = Post.objects.filter(
-            blog__in=request.user.followed_blogs.all()
-        ).order_by('-created_time')
-        posts_serializer = PostSerializer(data=queryset, many=True)
-        posts_serializer.is_valid()
-        return Response(posts_serializer.data)
+class FeedView(viewsets.ModelViewSet):
+    serializer_class = PostSerializer
+
+    def get_queryset(self):
+        return Post.objects.filter(
+            blog__in=self.request.user.followed_blogs.all()
+        ).order_by('-created_time')[:500]
