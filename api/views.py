@@ -1,4 +1,4 @@
-from rest_framework import viewsets, mixins, status
+from rest_framework import viewsets, mixins, status, views
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
@@ -50,3 +50,13 @@ class PostViewSet(viewsets.ModelViewSet):
             Post.objects.get(pk=pk)
         )
         return Response(status=status.HTTP_200_OK)
+
+
+class FeedView(views.APIView):
+    def get(self, request):
+        queryset = Post.objects.filter(
+            blog__in=request.user.followed_blogs.all()
+        ).order_by('-created_time')
+        posts_serializer = PostSerializer(data=queryset, many=True)
+        posts_serializer.is_valid()
+        return Response(posts_serializer.data)
