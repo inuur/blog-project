@@ -10,6 +10,7 @@ from .serializer import (
     BlogSerializer,
     PostSerializer,
 )
+from .pagination import FeedPagination
 
 
 class BlogViewSet(mixins.ListModelMixin,
@@ -61,6 +62,7 @@ class PostViewSet(viewsets.ModelViewSet):
 
 class FeedView(viewsets.ModelViewSet):
     serializer_class = PostSerializer
+    pagination_class = FeedPagination
 
     def get_queryset(self):
         return Post.objects.filter(
