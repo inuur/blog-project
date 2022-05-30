@@ -1,8 +1,12 @@
 asgiref==3.5.2
 Django==4.0.4
 djangorestframework==3.13.1
+Faker==12.0.1
 Markdown==3.3.7
+mixer==7.2.2
 psycopg2==2.9.3
+python-dateutil==2.8.2
 pytz==2022.1
+six==1.16.0
 sqlparse==0.4.2
 tzdata==2022.1
