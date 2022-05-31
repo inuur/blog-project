@@ -28,16 +28,18 @@ class BlogViewSet(mixins.ListModelMixin,
 
     @action(methods=['post'], detail=True)
     def follow(self, request, pk=None):
-        self.request.user.followed_blogs.add(
-            Blog.objects.get(pk=pk)
-        )
+        blog = Blog.objects.filter(author_id=pk).first()
+        if not blog:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        self.request.user.followed_blogs.add(blog)
         return Response(status=status.HTTP_200_OK)
 
     @action(methods=['post'], detail=True)
     def unfollow(self, request, pk=None):
-        self.request.user.followed_blogs.remove(
-            Blog.objects.get(pk=pk)
-        )
+        blog = Blog.objects.filter(author_id=pk).first()
+        if not blog:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        self.request.user.followed_blogs.remove(blog)
         return Response(status=status.HTTP_200_OK)
 
 
