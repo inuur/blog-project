@@ -23,7 +23,7 @@ class TestBlog(APITestCase):
         response = client.post('/api/blog/', {}, format='json')
         self.assertEqual(response.status_code, 405)
 
-    def test_follow_blog(self):
+    def test_follow_and_unfollow_blog(self):
         client = APIClient()
         user1 = User.objects.create(username='Antonio1', password='super_secret')
         user2 = User.objects.create(username='Antonio2', password='super_secret')
@@ -33,3 +33,6 @@ class TestBlog(APITestCase):
         response = client.post(f'/api/blog/{user2_blog.author.id}/follow/')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(user1.followed_blogs.count(), 1)
+        response = client.post(f'/api/blog/{user2_blog.author.id}/unfollow/')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(user1.followed_blogs.count(), 0)
