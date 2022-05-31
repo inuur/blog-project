@@ -83,3 +83,12 @@ class TestPost(APITestCase):
         response = client.post(f'/api/post/{post_id}/unread/')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(stranger.read_posts.count(), 0)
+
+    def test_mark_post_read_that_doesnt_exist(self):
+        client = APIClient()
+        user = User.objects.create(username='Antonio', password='super_secret')
+        client.force_authenticate(user=user)
+        response = client.post(f'/api/post/999/read/')
+        self.assertEqual(response.status_code, 404)
+        response = client.post(f'/api/post/999/unread/')
+        self.assertEqual(response.status_code, 404)
