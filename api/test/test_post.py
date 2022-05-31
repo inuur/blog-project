@@ -6,7 +6,7 @@ from api.models import Blog, Post
 from user.models import User
 
 
-class TestBlog(APITestCase):
+class TestPost(APITestCase):
     def test_post_create(self):
         client = APIClient()
         user = User.objects.create(username='Antonio', password='super_secret')
