@@ -80,3 +80,6 @@ class TestPost(APITestCase):
         response = client.post(f'/api/post/{post_id}/read/')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(stranger.read_posts.count(), 1)
+        response = client.post(f'/api/post/{post_id}/unread/')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(stranger.read_posts.count(), 0)
