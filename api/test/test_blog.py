@@ -36,3 +36,12 @@ class TestBlog(APITestCase):
         response = client.post(f'/api/blog/{user2_blog.author.id}/unfollow/')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(user1.followed_blogs.count(), 0)
+
+    def test_follow_and_unfollow_blog_that_doesnt_exist(self):
+        client = APIClient()
+        user1 = User.objects.create(username='Antonio1', password='super_secret')
+        client.force_authenticate(user=user1)
+        response = client.post(f'/api/blog/999/follow/')
+        self.assertEqual(response.status_code, 404)
+        response = client.post(f'/api/blog/999/unfollow/')
+        self.assertEqual(response.status_code, 404)
