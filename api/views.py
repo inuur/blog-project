@@ -56,9 +56,18 @@ class PostViewSet(viewsets.ModelViewSet):
 
     @action(methods=['post'], detail=True)
     def read(self, request, pk=None):
-        self.request.user.read_posts.add(
-            Post.objects.get(pk=pk)
-        )
+        post = Post.objects.filter(pk=pk).first()
+        if not post:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        self.request.user.read_posts.add(post)
+        return Response(status=status.HTTP_200_OK)
+
+    @action(methods=['post'], detail=True)
+    def unread(self, request, pk=None):
+        post = Post.objects.filter(pk=pk).first()
+        if not post:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        self.request.user.read_posts.remove(post)
         return Response(status=status.HTTP_200_OK)
 
 
