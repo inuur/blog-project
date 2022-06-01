@@ -91,3 +91,9 @@ db.sqlite3
 # IDE
 
 .idea
+
+
+.env
+.env.dev
+
+celerybeat-schedule
